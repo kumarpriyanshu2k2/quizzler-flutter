@@ -25,6 +25,17 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scoreKeeper=[
+  ];
+  List<String> order=["False","True","True"];
+  List<String> questions=[
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.'
+  ];
+  int currQues=0;
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +48,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[currQues%3],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -61,6 +72,30 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                setState(() {
+                  if (order[currQues%3]=='True'){
+                    currQues+=1;
+                    scoreKeeper.add(
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      )
+                    );
+                  }
+                    else{
+                 scoreKeeper.add(
+             Icon(
+              Icons.close,
+    color: Colors.red,
+    )
+
+    );
+    currQues+=1;
+                  }
+
+
+
+                });
                 //The user picked true.
               },
             ),
@@ -79,12 +114,37 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                setState(() {
+
+                  if (order[currQues%3]=='False'){
+                    currQues+=1;
+                    scoreKeeper.add(
+                        Icon(
+                          Icons.check,
+                          color: Colors.green,
+                        )
+                    );
+                  }
+                  else{
+                    scoreKeeper.add(
+                        Icon(
+                          Icons.close,
+                          color: Colors.red,
+                        )
+
+                    );
+                    currQues+=1;
+                  }
+                });
                 //The user picked false.
               },
             ),
           ),
         ),
-        //TODO: Add a Row here as your score keeper
+        Row(
+          children: scoreKeeper
+        )
+
       ],
     );
   }
