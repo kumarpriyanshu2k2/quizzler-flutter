@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'quizbrain.dart';
+QuizBrain quizBrain = new QuizBrain();
 void main() => runApp(Quizzler());
 
 class Quizzler extends StatelessWidget {
@@ -48,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[currQues%3],
+                quizBrain.getQuestion(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -73,8 +74,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 setState(() {
-                  if (order[currQues%3]=='True'){
-                    currQues+=1;
+                  if (quizBrain.getAnswer()==true){
                     scoreKeeper.add(
                       Icon(
                         Icons.check,
@@ -90,8 +90,8 @@ class _QuizPageState extends State<QuizPage> {
     )
 
     );
-    currQues+=1;
-                  }
+              }
+                  quizBrain.nextQuestion();
 
 
 
@@ -116,8 +116,7 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {
 
-                  if (order[currQues%3]=='False'){
-                    currQues+=1;
+                  if (quizBrain.getAnswer()==false){
                     scoreKeeper.add(
                         Icon(
                           Icons.check,
@@ -133,8 +132,8 @@ class _QuizPageState extends State<QuizPage> {
                         )
 
                     );
-                    currQues+=1;
                   }
+                  quizBrain.nextQuestion();
                 });
                 //The user picked false.
               },
